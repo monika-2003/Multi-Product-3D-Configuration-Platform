@@ -14,6 +14,7 @@ export const PRODUCTS = [
     modelUrl:
       'https://cdn.jsdelivr.net/gh/KhronosGroup/glTF-Sample-Models@master/2.0/DamagedHelmet/glTF-Binary/DamagedHelmet.glb',
     color: '#c4a574',
+    colorMode: 'tint',
     scale: 1,
     camera: { fov: 45, position: [0, 0.2, 5] },
     featureFlags: {
@@ -27,14 +28,15 @@ export const PRODUCTS = [
     name: 'Classic Duck',
     modelUrl:
       'https://cdn.jsdelivr.net/gh/KhronosGroup/glTF-Sample-Models@master/2.0/Duck/glTF-Binary/Duck.glb',
-    color: '#e6c84f',
+    // Tint multiplies your hex over the texture — eyes stay black in the PNG.
+    color: '#ffffff',
+    colorMode: 'tint',
     scale: 1,
     camera: { fov: 45, position: [0, 0.2, 5] },
-    // Same editor template, fewer controls — like a simpler brand campaign.
     featureFlags: {
       allowColor: true,
       allowScale: true,
-      allowCamera: false,
+      allowCamera: true,
     },
   },
   {
@@ -42,12 +44,13 @@ export const PRODUCTS = [
     name: 'Boom Box',
     modelUrl:
       'https://cdn.jsdelivr.net/gh/KhronosGroup/glTF-Sample-Models@master/2.0/BoomBox/glTF-Binary/BoomBox.glb',
-    // Keep white so the original textures show. Color picker is hidden.
     color: '#ffffff',
+    // White tints textures; maps stay so labels and metal detail remain.
+    colorMode: 'tint',
     scale: 1,
     camera: { fov: 45, position: [0, 0.2, 5] },
     featureFlags: {
-      allowColor: false,
+      allowColor: true,
       allowScale: true,
       allowCamera: true,
     },

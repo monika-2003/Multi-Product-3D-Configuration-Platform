@@ -8,4 +8,5 @@ module.exports = {
     '\\.(css|less)$': 'identity-obj-proxy',
   },
   testMatch: ['**/__tests__/**/*.test.js'],
+  watchman: false,
 };

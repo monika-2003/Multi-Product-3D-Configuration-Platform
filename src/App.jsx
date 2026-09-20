@@ -38,6 +38,7 @@ function App() {
           <ProductViewer
             modelUrl={activeProduct.modelUrl}
             color={draft.color}
+            colorMode={activeProduct.colorMode || 'tint'}
             scale={draft.scale}
             camera={draft.camera}
             onLoadingChange={setLoading}

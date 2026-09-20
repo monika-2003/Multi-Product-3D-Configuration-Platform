@@ -21,27 +21,37 @@ function cloneMaterials(root) {
   });
 }
 
-function applyColor(root, color) {
+function isPreservedDetail(mesh, material) {
+  const label = `${mesh.name} ${material?.name || ''}`.toLowerCase();
+  return /eye|pupil|beak|bill|lash|brow|mouth|tongue/.test(label);
+}
+
+/**
+ * tint — multiply color over textures (Boom Box, Helmet).
+ * solid — paint textured body parts only (multi-mesh models).
+ * For single-texture models like the Khronos Duck, use tint so baked eyes stay black.
+ */
+function applyColor(root, color, colorMode) {
   root.traverse((child) => {
     if (!child.isMesh) return;
     const materials = Array.isArray(child.material) ? child.material : [child.material];
     materials.forEach((material) => {
-      if (material && material.color) {
+      if (!material || isPreservedDetail(child, material)) return;
+
+      if (colorMode === 'solid') {
+        if (!material.map) return;
+        material.map = null;
+      }
+
+      if (material.color) {
         material.color.set(color);
       }
+      material.needsUpdate = true;
     });
   });
 }
 
-function LoadingReporter({ onLoadingChange }) {
-  useEffect(() => {
-    onLoadingChange(true);
-    return () => onLoadingChange(false);
-  }, [onLoadingChange]);
-  return null;
-}
-
-function Model({ url, color, scale, onLoadingChange }) {
+function Model({ color, colorMode, scale, url, onLoadingChange }) {
   const { scene } = useGLTF(url);
   const cloned = useMemo(() => {
     const copy = scene.clone(true);
@@ -52,8 +62,8 @@ function Model({ url, color, scale, onLoadingChange }) {
   const [fit, setFit] = useState(null);
 
   useLayoutEffect(() => {
-    applyColor(cloned, color);
-  }, [cloned, color]);
+    applyColor(cloned, color, colorMode);
+  }, [cloned, color, colorMode]);
 
   // Measure after the model is in the scene. Detached clones often report an
   // empty bounding box, which would make the object look huge and off-center.
@@ -90,12 +100,11 @@ function Model({ url, color, scale, onLoadingChange }) {
   );
 }
 
-function ProductViewer({ modelUrl, color, scale, camera, onLoadingChange }) {
+function ProductViewer({ modelUrl, color, colorMode = 'tint', scale, camera, onLoadingChange }) {
   return (
     <div className="canvas-wrap">
       <Canvas className="canvas">
         <PerspectiveCamera
-          key={modelUrl}
           makeDefault
           fov={camera.fov}
           position={camera.position}
@@ -104,11 +113,13 @@ function ProductViewer({ modelUrl, color, scale, camera, onLoadingChange }) {
         <ambientLight intensity={0.7} />
         <directionalLight position={[5, 5, 5]} intensity={1.3} />
         <directionalLight position={[-3, 2, -2]} intensity={0.4} />
-        <Suspense fallback={<LoadingReporter onLoadingChange={onLoadingChange} />}>
+        {/* The overlay lives in App; the reducer already marks loading on select. */}
+        <Suspense fallback={null}>
           <Model
             key={modelUrl}
             url={modelUrl}
             color={color}
+            colorMode={colorMode}
             scale={scale}
             onLoadingChange={onLoadingChange}
           />

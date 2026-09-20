@@ -48,7 +48,7 @@ You do **not** change the switcher, editor, or 3D viewer. They already loop over
 - Left: GLB model with orbit + zoom, plus a loading overlay
 - Right: product buttons and a live config form
 - URL stays in sync, for example `/?product=helmet`
-- Feature flags hide editor fields (Duck has no camera editor, Boom Box has no color picker)
+- Optional `featureFlags` can hide editor fields per product (e.g. turn off color for texture-only models)
 
 ## State management and component architecture
 

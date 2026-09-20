@@ -7,7 +7,7 @@
  * One function makes that easy to test (no React, no URL, no DOM).
  */
 
-export function draftFromProduct(product) {
+function draftFromProduct(product) {
   return {
     color: product.color,
     scale: product.scale,
@@ -18,7 +18,7 @@ export function draftFromProduct(product) {
   };
 }
 
-export function getProductById(products, id) {
+function getProductById(products, id) {
   return products.find((product) => product.id === id) || products[0];
 }
 

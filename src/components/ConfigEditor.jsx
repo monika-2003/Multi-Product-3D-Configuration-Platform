@@ -18,15 +18,33 @@ export default function ConfigEditor({ draft, featureFlags, onChange, onReset })
       <p className="panel-label">Config editor</p>
 
       {flags.allowColor && (
-        <label className="field">
-          Color
-          <input
-            aria-label="Product color"
-            type="color"
-            value={draft.color}
-            onChange={(event) => onChange({ color: event.target.value })}
-          />
-        </label>
+        <>
+          <label className="field">
+            Color
+            <input
+              aria-label="Product color"
+              type="color"
+              value={draft.color}
+              onChange={(event) => onChange({ color: event.target.value })}
+            />
+          </label>
+          <label className="field">
+            Hex code
+            <input
+              aria-label="Product color hex"
+              type="text"
+              value={draft.color}
+              maxLength={7}
+              placeholder="#rrggbb"
+              onChange={(event) => {
+                const value = event.target.value;
+                if (/^#[0-9a-fA-F]{6}$/.test(value)) {
+                  onChange({ color: value });
+                }
+              }}
+            />
+          </label>
+        </>
       )}
 
       {flags.allowScale && (

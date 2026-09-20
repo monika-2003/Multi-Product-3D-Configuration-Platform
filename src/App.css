@@ -1,0 +1,167 @@
+.layout {
+  display: grid;
+  grid-template-columns: 1fr 340px;
+  height: 100%;
+  min-height: 100vh;
+}
+
+.stage {
+  position: relative;
+  height: 100%;
+  min-height: 360px;
+  background: #14161c;
+}
+
+.canvas-wrap,
+.canvas {
+  width: 100%;
+  height: 100%;
+}
+
+.stage-label {
+  position: absolute;
+  z-index: 1;
+  top: 16px;
+  left: 16px;
+  margin: 0;
+  padding: 6px 10px;
+  border-radius: 6px;
+  background: rgba(15, 17, 22, 0.7);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+}
+
+.loading-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(15, 17, 22, 0.55);
+  font-size: 14px;
+}
+
+.panel {
+  padding: 24px 20px;
+  background: #1a1d27;
+  border-left: 1px solid #2a2e3b;
+  overflow: auto;
+}
+
+.panel-header h1 {
+  margin: 0 0 8px;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+.panel-header p {
+  margin: 0 0 24px;
+  color: #9aa0a6;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.panel-label {
+  margin: 0 0 10px;
+  color: #9aa0a6;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.switcher {
+  margin-bottom: 24px;
+}
+
+.switcher-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.switcher-list button {
+  padding: 10px 12px;
+  border: 1px solid #2a2e3b;
+  border-radius: 8px;
+  background: #12141b;
+  color: #e8eaed;
+  text-align: left;
+  cursor: pointer;
+}
+
+.switcher-list button.is-active {
+  border-color: #6c8cff;
+  background: #243056;
+}
+
+.editor {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 13px;
+}
+
+.field input[type='number'],
+.field input[type='color'] {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #2a2e3b;
+  border-radius: 6px;
+  background: #12141b;
+  color: #e8eaed;
+}
+
+.field input[type='color'] {
+  height: 40px;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.field-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.field-row input[type='range'] {
+  flex: 1;
+}
+
+.field-row input[type='number'] {
+  width: 80px;
+}
+
+.camera-xy .field {
+  flex: 1;
+}
+
+.reset-btn {
+  margin-top: 8px;
+  padding: 10px 12px;
+  border: 0;
+  border-radius: 8px;
+  background: #6c8cff;
+  color: #0f1116;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+@media (max-width: 800px) {
+  .layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: 50vh 1fr;
+  }
+
+  .panel {
+    border-left: 0;
+    border-top: 1px solid #2a2e3b;
+  }
+}
